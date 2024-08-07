@@ -67,6 +67,29 @@ if len(filtered_table) > 0:
         """error""" % e.reason    )
         #sales analysis
     
-daily_qty_sold = df.groupby('date')['quantity'].sum()
-daily_qty_sold_df = daily_qty_sold.reset_index().rename(columns={'quantity':'total qty'})
-daily_qty_sold_df.plot(x='date',y='total qty') 
+
+try:
+    if len(filtered_table) > 0:
+        daily_qty_sold = filtered_table.groupby('date')['sales'].sum()
+    else:
+        daily_qty_sold = df.groupby('date')['sales'].sum()
+    daily_qty_sold = df.groupby('date')['sales'].sum()
+    daily_qty_sold_df = daily_qty_sold.reset_index().rename(columns={'sales':"total sales"})
+    ax = daily_qty_sold_df.plot.area(x='date',
+                                         y='total sales')
+    st.area_chart(daily_qty_sold_df,
+                      x='date',
+                      y='total sales')
+        
+except ValueError as e:
+    st.error(
+        """Error"""
+    )
+        
+        
+        
+        
+        
+        
+   
+    
